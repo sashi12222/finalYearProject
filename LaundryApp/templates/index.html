@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Laundry at Ease - Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-4">
+        <h1 class="display-4">Welcome to Laundry at Ease</h1>
+        <p class="lead">Your one-stop solution for all laundry needs</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h4>Our Services</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h3 class="card-title">Regular Wash</h3>
+                                <p class="card-text">Our standard washing service for all your regular clothes.</p>
+                                <p><strong>Starting from $5</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h3 class="card-title">Dry Cleaning</h3>
+                                <p class="card-text">Special care for your delicate garments and formal wear.</p>
+                                <p><strong>Starting from $10</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h3 class="card-title">Stain Removal</h3>
+                                <p class="card-text">Advanced stain detection and removal using AI technology.</p>
+                                <p><strong>Starting from $8</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h3 class="card-title">Express Service</h3>
+                                <p class="card-text">Quick turnaround for when you need your clothes urgently.</p>
+                                <p><strong>Starting from $15</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h4>How It Works</h4>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <i class="bi bi-person-plus-fill" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5>1. Register</h5>
+                        <p>Create an account to get started with our services</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <i class="bi bi-cart-plus" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5>2. Place Order</h5>
+                        <p>Select services and upload images of your laundry</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <i class="bi bi-check-circle" style="font-size: 2rem;"></i>
+                        </div>
+                        <h5>3. Get Clean Clothes</h5>
+                        <p>Track your order and receive freshly cleaned clothes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

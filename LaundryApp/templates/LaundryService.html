@@ -1,0 +1,521 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Place Order - Laundry at Ease{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<style>
+    .service-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+    }
+    
+    .form-select, .form-control {
+        padding: 10px 15px;
+        border-radius: 8px;
+    }
+    
+    .clothing-item {
+        transition: all 0.3s;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .clothing-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .item-icon {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: var(--primary-color);
+    }
+    
+    .quantity-group {
+        display: flex;
+        align-items: center;
+    }
+    
+    .quantity-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--light-color);
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    
+    .item-quantity {
+        width: 60px;
+        text-align: center;
+        margin: 0 5px;
+    }
+    
+    .summary-section {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    
+    .card-header .service-badge {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header position-relative">
+                <h3><i class="bi bi-basket me-2"></i>Laundry Service Order</h3>
+                <span class="badge bg-primary service-badge">Online Booking</span>
+            </div>
+            <div class="card-body">
+                <form name="orderForm" id="orderForm" method="post" action="{% url 'LaundryServiceAction' %}">
+                    {% csrf_token %}
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h4 class="border-bottom pb-2 mb-3"><i class="bi bi-stars me-2"></i>Select Service Type</h4>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <div class="card clothing-item h-100">
+                                <div class="card-body text-center">
+                                    <input type="radio" class="btn-check" name="t1" id="service1" value="Only Iron" checked>
+                                    <label class="btn btn-outline-primary w-100 h-100 py-3" for="service1">
+                                        <i class="bi bi-brightness-high-fill service-icon"></i>
+                                        <h5>Only Iron</h5>
+                                        <p class="mb-0 text-muted small">Ironing service only</p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <div class="card clothing-item h-100">
+                                <div class="card-body text-center">
+                                    <input type="radio" class="btn-check" name="t1" id="service2" value="Wash & Iron">
+                                    <label class="btn btn-outline-primary w-100 h-100 py-3" for="service2">
+                                        <i class="bi bi-droplet-fill service-icon"></i>
+                                        <h5>Wash & Iron</h5>
+                                        <p class="mb-0 text-muted small">Full service</p>
+                                    </label>
+                                </div>
+                            </div>
+		</div>
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <div class="card clothing-item h-100">
+                                <div class="card-body text-center">
+                                    <input type="radio" class="btn-check" name="t1" id="service3" value="Washing Only">
+                                    <label class="btn btn-outline-primary w-100 h-100 py-3" for="service3">
+                                        <i class="bi bi-water service-icon"></i>
+                                        <h5>Washing Only</h5>
+                                        <p class="mb-0 text-muted small">No ironing</p>
+                                    </label>
+		</div>
+	</div>
+				</div>
+			
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <div class="card clothing-item h-100">
+                                <div class="card-body text-center">
+                                    <input type="radio" class="btn-check" name="t1" id="service4" value="Dry Wash">
+                                    <label class="btn btn-outline-primary w-100 h-100 py-3" for="service4">
+                                        <i class="bi bi-wind service-icon"></i>
+                                        <h5>Dry Wash</h5>
+                                        <p class="mb-0 text-muted small">For delicate fabrics</p>
+                                    </label>
+                                </div>
+                            </div>
+	</div>	
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <div class="card clothing-item h-100">
+                                <div class="card-body text-center">
+                                    <input type="radio" class="btn-check" name="t1" id="service5" value="Steam Iron">
+                                    <label class="btn btn-outline-primary w-100 h-100 py-3" for="service5">
+                                        <i class="bi bi-cloud-fog2-fill service-icon"></i>
+                                        <h5>Steam Iron</h5>
+                                        <p class="mb-0 text-muted small">Premium pressing</p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h4 class="border-bottom pb-2 mb-3"><i class="bi bi-list-check me-2"></i>Select Clothing Items</h4>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-wrench-adjustable-circle item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Shirts</h5>
+                                            <p class="text-muted small mb-0">Formal/Casual</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t2" id="shirts">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-shop item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">T-Shirts</h5>
+                                            <p class="text-muted small mb-0">Cotton/Polyester</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t3" id="tshirts">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-wallet item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Shorts</h5>
+                                            <p class="text-muted small mb-0">All types</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t4" id="shorts">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-layers item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Pants</h5>
+                                            <p class="text-muted small mb-0">Trousers/Jeans</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t5" id="pants">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-palette item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Towels</h5>
+                                            <p class="text-muted small mb-0">Bath/Hand</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t6" id="towels">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-briefcase item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Suits</h5>
+                                            <p class="text-muted small mb-0">Formal/Business</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t7" id="suits">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-box2 item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Inner Wear</h5>
+                                            <p class="text-muted small mb-0">Undergarments</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t8" id="innerwear">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-bag item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Kurtas</h5>
+                                            <p class="text-muted small mb-0">Traditional</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t9" id="kurtas">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-list item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Paijamas</h5>
+                                            <p class="text-muted small mb-0">Sleepwear</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t10" id="paijamas">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card clothing-item">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="bi bi-rulers item-icon me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Skirts</h5>
+                                            <p class="text-muted small mb-0">All types</p>
+                                        </div>
+                                    </div>
+                                    <select class="form-select" name="t11" id="skirts">
+                                        {% for i in '01234567891011121314151617181920'|make_list|slice:':21' %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+			 </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h4 class="border-bottom pb-2 mb-3"><i class="bi bi-truck me-2"></i>Delivery Details</h4>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="address" class="form-label">Delivery Address</label>
+                            <textarea class="form-control" id="address" name="t12" rows="3" placeholder="Enter your complete delivery address"></textarea>
+                            <div class="form-text">Please provide a complete address including landmarks for smooth delivery.</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="deliveryDate" class="form-label">Delivery Date</label>
+                            <input type="date" class="form-control datepicker" id="deliveryDate" name="t13" min="{{ current_date }}">
+                            <div class="form-text">Choose a date at least 2 days from today for delivery.</div>
+                        </div>
+				</div>	
+					
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="summary-section mb-4">
+                                <h4 class="mb-3"><i class="bi bi-receipt me-2"></i>Order Summary</h4>
+                                <div id="orderSummary" class="row">
+                                    <div class="col-md-4">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>Service Type</span>
+                                                <span id="summaryService" class="badge bg-primary">Only Iron</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <span>Total Items</span>
+                                                <span id="summaryTotal" class="badge bg-secondary">0</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="text-muted mb-2">Selected Items:</p>
+                                        <div id="summaryItems" class="d-flex flex-wrap">
+                                            <span class="badge bg-light text-dark m-1">None selected</span>
+                                        </div>
+                                    </div>
+                                </div>
+				</div>
+				
+                            <div class="d-grid gap-2 col-md-6 col-lg-4 mx-auto">
+                                <button type="submit" class="btn btn-primary btn-lg" onclick="return validateForm()">
+                                    <i class="bi bi-arrow-right-circle me-2"></i>Continue to Upload Image
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize date picker with min date as tomorrow
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 2);
+    
+    flatpickr(".datepicker", {
+        minDate: tomorrow,
+        dateFormat: "Y-m-d",
+    });
+    
+    // Service type change handler
+    const serviceInputs = document.querySelectorAll('input[name="t1"]');
+    serviceInputs.forEach(input => {
+        input.addEventListener('change', updateSummary);
+    });
+    
+    // Quantity change handlers
+    const quantitySelects = document.querySelectorAll('select');
+    quantitySelects.forEach(select => {
+        select.addEventListener('change', updateSummary);
+    });
+    
+    // Initial summary update
+    updateSummary();
+    
+    function updateSummary() {
+        // Get selected service
+        const selectedService = document.querySelector('input[name="t1"]:checked').value;
+        document.getElementById('summaryService').textContent = selectedService;
+        
+        // Calculate total items
+        let totalItems = 0;
+        const selectedItems = [];
+        
+        const itemNames = [
+            {selector: '#shirts', name: 'Shirts'},
+            {selector: '#tshirts', name: 'T-Shirts'},
+            {selector: '#shorts', name: 'Shorts'},
+            {selector: '#pants', name: 'Pants'},
+            {selector: '#towels', name: 'Towels'},
+            {selector: '#suits', name: 'Suits'},
+            {selector: '#innerwear', name: 'Inner Wear'},
+            {selector: '#kurtas', name: 'Kurtas'},
+            {selector: '#paijamas', name: 'Paijamas'},
+            {selector: '#skirts', name: 'Skirts'}
+        ];
+        
+        itemNames.forEach(item => {
+            const quantity = parseInt(document.querySelector(item.selector).value);
+            totalItems += quantity;
+            
+            if (quantity > 0) {
+                selectedItems.push(`${quantity} × ${item.name}`);
+            }
+        });
+        
+        document.getElementById('summaryTotal').textContent = totalItems;
+        
+        // Update selected items
+        const summaryItems = document.getElementById('summaryItems');
+        if (selectedItems.length > 0) {
+            summaryItems.innerHTML = '';
+            selectedItems.forEach(item => {
+                const badge = document.createElement('span');
+                badge.className = 'badge bg-light text-dark m-1';
+                badge.textContent = item;
+                summaryItems.appendChild(badge);
+            });
+        } else {
+            summaryItems.innerHTML = '<span class="badge bg-light text-dark m-1">None selected</span>';
+        }
+    }
+});
+
+function validateForm() {
+    const address = document.getElementById('address').value;
+    const deliveryDate = document.getElementById('deliveryDate').value;
+    
+    if (!address) {
+        alert('Please enter delivery address');
+        document.getElementById('address').focus();
+        return false;
+    }
+    
+    if (!deliveryDate) {
+        alert('Please choose delivery date');
+        document.getElementById('deliveryDate').focus();
+        return false;
+    }
+    
+    // Calculate total items
+    let totalItems = 0;
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+        totalItems += parseInt(select.value);
+    });
+    
+    if (totalItems === 0) {
+        alert('Please select at least one item');
+        return false;
+    }
+    
+    return true;
+}
+</script>
+{% endblock %}

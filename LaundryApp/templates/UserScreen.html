@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Laundry at Ease{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                {% if data %}
+                <div class="alert alert-info">
+                    {{ data|safe }}
+                </div>
+                {% endif %}
+                
+                {% if img %}
+                <div class="text-center mt-3">
+                    <h4 class="mb-3">Analysis Result</h4>
+                    <img src="data:image/png;base64, {{ img }}" alt="Analysis Image" class="img-fluid rounded shadow" style="max-width: 100%;" />
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h4>Quick Actions</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-3">
+                    <a href="{% url 'LaundryService' %}" class="btn btn-primary">New Laundry Order</a>
+                    <a href="{% url 'ViewLaundry' %}" class="btn btn-outline-primary">View My Orders</a>
+                    <a href="{% url 'YoloGraph' %}" class="btn btn-outline-primary">View Performance Graph</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h4>Getting Started</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="p-3 border rounded mb-2">
+                            <i class="bi bi-box-seam" style="font-size: 2rem; color: var(--primary-color);"></i>
+                            <h5 class="mt-2">1. Create Order</h5>
+                        </div>
+                        <p>Select your laundry services and items</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="p-3 border rounded mb-2">
+                            <i class="bi bi-camera" style="font-size: 2rem; color: var(--primary-color);"></i>
+                            <h5 class="mt-2">2. Upload Image</h5>
+                        </div>
+                        <p>Our AI will detect stains in your laundry</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="p-3 border rounded mb-2">
+                            <i class="bi bi-truck" style="font-size: 2rem; color: var(--primary-color);"></i>
+                            <h5 class="mt-2">3. Track Order</h5>
+                        </div>
+                        <p>Monitor the status of your laundry order</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

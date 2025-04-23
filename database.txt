@@ -1,0 +1,32 @@
+drop database  laundry;
+
+create database laundry;
+use laundry;
+
+create table register(username varchar(50) primary key,
+password varchar(50),
+contact_no varchar(20),
+email varchar(50), 
+address varchar(155));
+
+create table laundry_service(laundry_id int,
+username varchar(50),
+submit_date varchar(40),
+service_type varchar(30),
+num_shirts varchar(20),
+num_tshirts varchar(20),
+num_shorts varchar(20),
+num_pants varchar(20),
+num_towels varchar(20),
+num_suits varchar(20),
+num_innerwears varchar(20),
+num_kurtas varchar(20),
+num_paijamas varchar(20),
+num_skirts varchar(20),
+image_file varchar(50),
+stain_condition varchar(30),
+delivery_date varchar(30),
+delivery_address varchar(300),
+delivery_status varchar(30));
+
+

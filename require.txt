@@ -1,0 +1,20 @@
+Project: laundry at ease
+1) The visiting page should have laundry at ease as the title with highlights
+2) after visiting  the login page  should be provided.
+3)the type of service  selection page.Consist of 5 parameters for selecting
+A) only iron
+B) wash and iron
+C) washing only
+D ) dry wash 
+E ) steam iron.
+
+3) after selecting the mode of wash the customer needs to enter the no of clothes such pants / shirts/ shorts / inner wear etc. 
+additional to that an inbox needs to be given to the customer to give a photo spot where the stain detection. 
+Algorithm would work.
+4) a database must be created inorder to store these all things.
+Ps : type of clothes while selection should consist of clothes such as:
+1) shirt 2) t shirt 3) shorts 4) pants 5) towels 6)suits 7) inner wears 8 ) kurta 9) paijama 10)skirt
+
+1)stain spot detection with a picture.(Yolo)
+2) type of cloth on which it is. For example stain spot on red t shirt or black pant(optional)
+3) lastly a picture submitted inbox for a customer to show to stain spot to vendor4) stain spot must be in rectangular box or highlated

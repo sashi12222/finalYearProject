@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - Laundry at Ease{% endblock %}
+
+{% block extra_js %}
+<script>
+function validate(){
+	var username = document.forms["registerForm"]["t1"].value;
+	var password = document.forms["registerForm"]["t2"].value;
+	var contact = document.forms["registerForm"]["t3"].value;
+	var email = document.forms["registerForm"]["t4"].value;
+	var address = document.forms["registerForm"]["t5"].value;
+	
+	if(username == null || username == ""){
+		alert("Please enter username");
+		document.registerForm.t1.focus();
+		return false;
+	}
+	if(password == null || password == ""){
+		alert("Please enter password");
+		document.registerForm.t2.focus();
+		return false;
+	}
+	if(contact == null || contact == ""){
+		alert("Please enter contact number");
+		document.registerForm.t3.focus();
+		return false;
+	}
+	if(email == null || email == ""){
+		alert("Please enter email ID");
+		document.registerForm.t4.focus();
+		return false;
+	}
+	if(address == null || address == ""){
+		alert("Please enter address");
+		document.registerForm.t5.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-8 offset-md-2">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="text-center">Create Your Account</h3>
+			</div>
+			<div class="card-body">
+				{% if data %}
+				<div class="alert {% if 'already exists' in data %}alert-warning{% elif 'completed' in data %}alert-success{% else %}alert-info{% endif %} mb-4">
+					{{ data|safe }}
+				</div>
+				{% endif %}
+				
+				<form name="registerForm" method="post" action="{% url 'RegisterAction' %}" onSubmit="return validate()">
+					{% csrf_token %}
+					
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label for="username" class="form-label">Username</label>
+							<input type="text" class="form-control" id="username" name="t1" placeholder="Choose a username">
+						</div>
+						
+						<div class="col-md-6 mb-3">
+							<label for="password" class="form-label">Password</label>
+							<input type="password" class="form-control" id="password" name="t2" placeholder="Create a password">
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label for="contact" class="form-label">Contact Number</label>
+							<input type="text" class="form-control" id="contact" name="t3" placeholder="Your phone number">
+						</div>
+						
+						<div class="col-md-6 mb-3">
+							<label for="email" class="form-label">Email Address</label>
+							<input type="email" class="form-control" id="email" name="t4" placeholder="Your email address">
+						</div>
+					</div>
+					
+					<div class="mb-3">
+						<label for="address" class="form-label">Address</label>
+						<textarea class="form-control" id="address" name="t5" rows="3" placeholder="Your full address"></textarea>
+					</div>
+					
+					<div class="d-grid gap-2">
+						<button type="submit" class="btn btn-primary">Register</button>
+					</div>
+				</form>
+			</div>
+			<div class="card-footer text-center">
+				<p class="mb-0">Already have an account? <a href="{% url 'UserLogin' %}">Login here</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

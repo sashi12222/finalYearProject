@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Laundry Service App{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Lightbox CSS for image preview -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #1e1e2c;
+            --primary-dark: #141420;
+            --secondary-color: #6c757d;
+            --secondary-dark: #495057;
+            --dark-color: #1e1e2c;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --accent-color: #f8f9fa;
+            --text-dark: #2d3436;
+            --text-light: #f8f9fa;
+            --border-color: #dee2e6;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-dark);
+            line-height: 1.6;
+            letter-spacing: 0.01em;
+        }
+        
+        h1, h2, h3, h4, h5, h6, .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        
+        /* Enhanced Navbar Styles with Glassmorphism */
+        .navbar {
+            background: rgba(30, 30, 44, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--text-light) !important;
+            letter-spacing: 0.05em;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .navbar-brand::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        
+        .navbar-brand:hover::after {
+            width: 80px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            transition: all 0.4s ease;
+            font-weight: 500;
+            position: relative;
+            padding: 0.7rem 1.3rem;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-link:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link.active {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.18);
+            color: white !important;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            font-weight: 600;
+        }
+        
+        .nav-link.active:after {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 3px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+            bottom: 5px;
+            left: 30%;
+            border-radius: 3px;
+        }
+        
+        .dropdown-menu {
+            border: none;
+            border-radius: 15px;
+            background: rgba(30, 30, 44, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem 0;
+            margin-top: 0.75rem;
+            transform: translateY(10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .dropdown-item {
+            padding: 0.7rem 1.5rem;
+            transition: all 0.3s ease;
+            color: var(--text-light);
+            font-weight: 400;
+            font-size: 0.92rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .dropdown-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .dropdown-item:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            background: white;
+            bottom: 8px;
+            left: 12px;
+            transition: width 0.3s ease;
+        }
+        
+        .dropdown-item:hover:before {
+            width: 10px;
+        }
+        
+        .dropdown-divider {
+            border-color: rgba(255, 255, 255, 0.1);
+            margin: 0.5rem 1rem;
+        }
+        
+        .navbar-nav .badge {
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-toggler {
+            padding: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-toggle:hover .user-avatar {
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+        
+        /* Main Content */
+        .main-container {
+            min-height: calc(100vh - 160px);
+            padding: 40px 0;
+        }
+        
+        /* Card Styles */
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 25px;
+            overflow: hidden;
+            background-color: white;
+        }
+        
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
+            color: var(--text-light);
+            font-weight: 600;
+            padding: 1.2rem 1.5rem;
+            border-bottom: none;
+        }
+        
+        .card-body {
+            padding: 1.8rem;
+        }
+        
+        /* Button Styles */
+        .btn {
+            font-weight: 500;
+            border-radius: 10px;
+            padding: 0.6rem 1.8rem;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            border: none;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(to right, var(--success-color), #218838);
+            border: none;
+            box-shadow: 0 3px 8px rgba(40, 167, 69, 0.2);
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(to right, #218838, var(--success-color));
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline-light {
+            color: var(--text-light);
+            border-color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+        }
+        
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.8);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
+            color: var(--text-light);
+            padding: 60px 0 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        
+        .footer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+        }
+        
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer h5:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.5);
+            bottom: -8px;
+            left: 0;
+            border-radius: 3px;
+        }
+        
+        .footer-links a {
+            transition: all 0.3s ease;
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.7) !important;
+            font-size: 0.95rem;
+            padding: 0.3rem 0;
+        }
+        
+        .footer-links a:hover {
+            transform: translateX(5px);
+            color: white !important;
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.7) !important;
+            margin-right: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Table Styles */
+        .table {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            margin-bottom: 1.5rem;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .table thead {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
+            color: var(--text-light);
+        }
+        
+        .table th {
+            padding: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            font-size: 0.85rem;
+        }
+        
+        .table td {
+            padding: 1.2rem;
+            vertical-align: middle;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+        
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .table-hover tbody tr {
+            transition: all 0.2s ease;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+        
+        .table-primary, .table-primary > th, .table-primary > td {
+            background-color: var(--primary-color) !important;
+            color: var(--text-light) !important;
+        }
+        
+        /* Form Controls */
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.2);
+        }
+        
+        /* Alert Styles */
+        .alert {
+            border-radius: 15px;
+            border: none;
+            padding: 1.2rem 1.5rem;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        /* Badge Styles */
+        .badge {
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .bg-primary {
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark)) !important;
+        }
+        
+        .bg-secondary {
+            background-color: var(--secondary-color) !important;
+        }
+        
+        .bg-success {
+            background-color: var(--success-color) !important;
+        }
+        
+        .bg-info {
+            background-color: var(--info-color) !important;
+        }
+        
+        .bg-warning {
+            background-color: var(--warning-color) !important;
+        }
+        
+        .bg-danger {
+            background-color: var(--danger-color) !important;
+        }
+        
+        .badge-pending {
+            background-color: var(--warning-color);
+            color: var(--text-dark);
+        }
+        
+        .badge-completed {
+            background-color: var(--success-color);
+            color: var(--text-light);
+        }
+        
+        .badge-processing {
+            background-color: var(--info-color);
+            color: var(--text-light);
+        }
+        
+        /* Image thumbnails */
+        .img-thumbnail-custom {
+            max-width: 120px;
+            max-height: 120px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid white;
+        }
+        
+        .img-thumbnail-custom:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+        }
+        
+        /* Animation Effects */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card, .table, .alert {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Responsive tables */
+        @media (max-width: 992px) {
+            .table-responsive {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .table th, .table td {
+                white-space: nowrap;
+            }
+        }
+        
+        /* Custom Button Effects */
+        .btn-glow {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .btn-glow:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: -1;
+            transform: scale(0);
+            opacity: 0;
+            border-radius: 50%;
+            transition: transform 0.6s, opacity 0.6s;
+        }
+        
+        .btn-glow:hover:after {
+            transform: scale(2);
+            opacity: 1;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <i class="bi bi-basket-fill fs-3 me-2"></i>
+                <span>
+                    <span class="fw-bold">LAUNDRY</span><span class="text-white-50">at</span><span class="fw-bold">EASE</span>
+                    <small class="d-block small text-white-50 lh-1">Premium Cleaning Service</small>
+                </span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">HOME</a>
+                    </li>
+                    
+                    {% if request.session.username %}
+                        {% if request.session.is_admin %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ViewCustomers">
+                                    CUSTOMERS
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ViewOrderStatus">
+                                    ORDERS
+                                </a>
+                            </li>
+                            <li class="nav-item ms-2">
+                                <span class="badge rounded-pill bg-dark border border-light text-white px-3 py-2">
+                                    ADMIN
+                                </span>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/LaundryService">
+                                    NEW ORDER
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ViewLaundry">
+                                    MY ORDERS
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/YoloGraph">
+                                    PERFORMANCE
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        <li class="nav-item dropdown ms-2">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="user-avatar rounded-circle d-flex justify-content-center align-items-center me-2">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <span>{{ request.session.username }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="navbarDropdown">
+                                <li><span class="dropdown-item-text text-white-50 small">{% if request.session.is_admin %}Administrator{% else %}Customer{% endif %}</span></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-white" href="/Logout">
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/UserLogin">
+                                LOGIN
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Register">
+                                REGISTER
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light btn-glow rounded-pill px-3 py-2 ms-2" href="/AdminLogin">
+                                ADMIN
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container main-container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container py-4">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5><i class="bi bi-basket-fill me-2"></i>About Us</h5>
+                    <p class="text-white-50 mb-4">We provide premium laundry services with cutting-edge AI stain detection technology to make your laundry experience hassle-free.</p>
+                    <div class="d-flex mt-4">
+                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5><i class="bi bi-link-45deg me-2"></i>Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="/" class="text-decoration-none"><i class="bi bi-chevron-right me-1 small"></i>Home</a></li>
+                        <li><a href="/LaundryService" class="text-decoration-none"><i class="bi bi-chevron-right me-1 small"></i>Place Order</a></li>
+                        <li><a href="/ViewLaundry" class="text-decoration-none"><i class="bi bi-chevron-right me-1 small"></i>My Orders</a></li>
+                        <li><a href="/YoloGraph" class="text-decoration-none"><i class="bi bi-chevron-right me-1 small"></i>Performance</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5><i class="bi bi-geo-alt-fill me-2"></i>Our Locations</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#" class="text-decoration-none"><i class="bi bi-pin-map-fill me-1 small"></i>123 Laundry Street, City</a></li>
+                        <li><a href="#" class="text-decoration-none"><i class="bi bi-pin-map-fill me-1 small"></i>456 Clean Avenue, Town</a></li>
+                        <li><a href="#" class="text-decoration-none"><i class="bi bi-pin-map-fill me-1 small"></i>789 Fresh Boulevard, Metro</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <h5><i class="bi bi-headset me-2"></i>Contact Us</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2 d-flex align-items-center">
+                            <i class="bi bi-envelope-fill me-2 text-white-50"></i>
+                            <a href="mailto:info@laundryatease.com" class="text-decoration-none">info@laundryatease.com</a>
+                        </li>
+                        <li class="mb-2 d-flex align-items-center">
+                            <i class="bi bi-telephone-fill me-2 text-white-50"></i>
+                            <a href="tel:+1234567890" class="text-decoration-none">(123) 456-7890</a>
+                        </li>
+                        <li class="mb-2 d-flex align-items-center">
+                            <i class="bi bi-clock-fill me-2 text-white-50"></i>
+                            <span class="text-white-50">Mon-Sat: 8AM - 8PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4 bg-light opacity-25">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-white-50">&copy; 2025 <span class="fw-bold text-white">LAUNDRY</span><span class="text-white-50">at</span><span class="fw-bold text-white">EASE</span>. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                    <a href="#" class="text-decoration-none text-white-50 me-3">Privacy Policy</a>
+                    <a href="#" class="text-decoration-none text-white-50 me-3">Terms of Service</a>
+                    <a href="#" class="text-decoration-none text-white-50 me-3">FAQ</a>
+                    <button class="btn btn-sm btn-outline-light rounded-circle ms-3 btn-glow" title="Toggle Dark/Light Mode">
+                        <i class="bi bi-circle-half"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Lightbox JS for image preview -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script>
+        // Initialize lightbox options
+        lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true,
+            'showImageNumberLabel': false,
+            'albumLabel': "Image %1 of %2"
+        });
+        
+        // Add active class to current nav item
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLocation = location.pathname;
+            const navLinks = document.querySelectorAll('.navbar .nav-link');
+            
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href');
+                if (linkPath === currentLocation) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Enhance dropdown behavior
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                const menu = dropdown.querySelector('.dropdown-menu');
+                
+                dropdown.addEventListener('mouseenter', () => {
+                    menu.style.display = 'block';
+                    setTimeout(() => {
+                        menu.style.transform = 'translateY(0)';
+                        menu.style.opacity = '1';
+                        menu.style.visibility = 'visible';
+                    }, 10);
+                });
+                
+                dropdown.addEventListener('mouseleave', () => {
+                    menu.style.transform = 'translateY(10px)';
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                    setTimeout(() => {
+                        menu.style.display = '';
+                    }, 300);
+                });
+            });
+        });
+    </script>
+    <!-- Custom JS -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 
