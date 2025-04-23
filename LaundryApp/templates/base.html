@@ -17,16 +17,15 @@
     <!-- Custom CSS -->
     <style>
         :root {
-            --primary-color: #1e1e2c;
-            --primary-dark: #141420;
+            --primary-color: #007bff;
+            --primary-hover: #0069d9;
             --secondary-color: #6c757d;
-            --secondary-dark: #495057;
-            --dark-color: #1e1e2c;
-            --light-color: #f8f9fa;
             --success-color: #28a745;
+            --info-color: #17a2b8;
             --warning-color: #ffc107;
             --danger-color: #dc3545;
-            --info-color: #17a2b8;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
             --accent-color: #f8f9fa;
             --text-dark: #2d3436;
             --text-light: #f8f9fa;
@@ -34,6 +33,55 @@
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.07);
             --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Dark mode styles */
+        [data-bs-theme="dark"] {
+            --bs-body-bg: #212529;
+            --bs-body-color: #f8f9fa;
+        }
+        
+        [data-bs-theme="dark"] .navbar {
+            background-color: #121212 !important;
+        }
+        
+        [data-bs-theme="dark"] .dropdown-menu {
+            background-color: #343a40;
+            color: #f8f9fa;
+            border-color: #495057;
+        }
+        
+        [data-bs-theme="dark"] .dropdown-item {
+            color: #f8f9fa;
+        }
+        
+        [data-bs-theme="dark"] .dropdown-item:hover {
+            background-color: #495057;
+        }
+        
+        [data-bs-theme="dark"] .table {
+            color: #f8f9fa;
+            border-color: #495057;
+        }
+        
+        [data-bs-theme="dark"] .card {
+            background-color: #343a40;
+            border-color: #495057;
+        }
+        
+        [data-bs-theme="dark"] .footer {
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+        
+        [data-bs-theme="dark"] .modal-content {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+        
+        /* Transition effect for theme change */
+        body, .navbar, .card, .table, .dropdown-menu, .footer, .modal-content {
+            transition: all 0.3s ease;
         }
         
         body {
@@ -774,6 +822,34 @@
                         menu.style.display = '';
                     }, 300);
                 });
+            });
+            
+            // Dark/Light Mode Toggle
+            const themeToggleBtn = document.querySelector('.btn-outline-light.rounded-circle');
+            const htmlElement = document.documentElement;
+            
+            // Check for saved theme preference or use default light theme
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            
+            // Apply the saved theme on page load
+            if (currentTheme === 'dark') {
+                htmlElement.setAttribute('data-bs-theme', 'dark');
+                document.body.classList.add('dark-mode');
+            }
+            
+            // Toggle theme when button is clicked
+            themeToggleBtn.addEventListener('click', function() {
+                if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
+                    // Switch to light mode
+                    htmlElement.setAttribute('data-bs-theme', 'light');
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    // Switch to dark mode
+                    htmlElement.setAttribute('data-bs-theme', 'dark');
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                }
             });
         });
     </script>

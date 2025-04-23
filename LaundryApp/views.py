@@ -510,7 +510,7 @@ def LaundryService(request):
         if not request.session.get('username'):
             return redirect('/UserLogin')
             
-       return render(request, 'LaundryService.html', {})    
+        return render(request, 'LaundryService.html', {})
 
 def index(request):
     if request.method == 'GET':
