@@ -1,4 +1,4 @@
-# Laundry at Ease
+<b><center> Laundary At Ease </center></b>
 
 A modern web application for laundry service management with AI-powered stain detection.
 
