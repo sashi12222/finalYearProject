@@ -117,10 +117,5 @@ A modern web application for laundry service management with AI-powered stain de
 3. Manage all orders under "ORDERS" section
 4. Update order status and delivery descriptions as needed
 
-## License
 
-[Insert your license information here]
 
-## Contact
-
-For inquiries, please contact info@laundryatease.com 
