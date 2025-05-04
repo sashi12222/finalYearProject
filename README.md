@@ -1,6 +1,21 @@
-<b><center> Laundary At Ease </center></b>
+<h1 align="center"> Laundary at Ease </h1>
+<p align="center">A modern web application for laundry service management with AI-powered stain detection.
+</p>
 
-A modern web application for laundry service management with AI-powered stain detection.
+<div align="center">
+
+
+  <a href="https://github.com/sashi12222/finalYearProject/stargazers">
+    <img src="https://img.shields.io/github/stars/sashi12222/finalYearProject?style=social" alt="GitHub stars">
+  </a>
+
+  <a href="https://github.com/sashi12222/finalYearProject/network/members">
+    <img src="https://img.shields.io/github/forks/sashi12222/finalYearProject?style=social" alt="GitHub forks">
+  </a>
+
+</div>
+
+<hr>
 
 ## Features
 
